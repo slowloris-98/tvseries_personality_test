@@ -126,8 +126,8 @@ print("\nNormalized Trait Scores:")
 print(normalized_profiles)
 
 # Save to a JSON file
-with open("character_profiles.json", "w") as f:
-    json.dump(character_profiles, f)
+with open("data\character_profiles.json", "w") as f:
+    json.dump(normalized_profiles, f)
 
 
 
@@ -150,7 +150,7 @@ def match_user_to_character(user_personality, character_personality_scores):
     best_match = max(similarities, key=similarities.get)
     return best_match, similarities[best_match]
 
-
+user_personality = {'loyalty': 4.75, 'ambition': 3.0, 'manipulativeness': 1.75, 'courage': 2.75}
 best_match, similarity_score = match_user_to_character(user_personality, normalized_profiles)
 print(f"Best Match: {best_match} (Similarity: {similarity_score:.2f})")
 

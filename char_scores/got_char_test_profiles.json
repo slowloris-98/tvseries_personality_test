@@ -1,0 +1,8 @@
+{
+    "Jon Snow": { "loyalty": 0.8, "ambition": 0.3, "manipulativeness": 0.1, "courage": 0.9 },
+    "Daenerys Targaryen": { "loyalty": 0.7, "ambition": 0.8, "manipulativeness": 0.4, "courage": 0.7 },
+    "Tyrion Lannister": { "loyalty": 0.6, "ambition": 0.5, "manipulativeness": 0.7, "courage": 0.4 },
+    "Cersei Lannister": { "loyalty": 0.2, "ambition": 1.0, "manipulativeness": 0.9, "courage": 0.6 },
+    "Arya Stark": { "loyalty": 0.9, "ambition": 0.6, "manipulativeness": 0.5, "courage": 0.8 },
+    "Sansa Stark": { "loyalty": 0.7, "ambition": 0.4, "manipulativeness": 0.6, "courage": 0.5 }
+  }
