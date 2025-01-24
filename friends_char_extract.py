@@ -14,35 +14,40 @@ device = 0 if torch.cuda.is_available() else -1
 sentiment_pipeline = pipeline("sentiment-analysis", device=device)
 zero_shot_pipeline = pipeline("zero-shot-classification", device=device)
 
-# Trait keywords for loyalty
+# Define new traits and their labels
 trait_keywords = {
-    "loyalty": ["family", "honor", "oath", "duty", "friendship", "trust"]
+    "humor": ["joke", "funny", "laugh", "hilarious", "sarcasm"],
+    "empathy": ["support", "help", "understand", "kindness", "sympathy"]
 }
 
-# Labels for zero-shot classification
-manipulative_labels = ["deception", "manipulation", "power play", "trickery"]
-ambitious_labels = ["ambition", "power", "goal-setting", "dreams"]
+zero_shot_labels = {
+    "quirkiness": ["eccentricity", "weirdness", "uniqueness"],
+    "ambition": ["ambition", "goal-setting", "career", "dreams"],
+    "romanticism": ["love", "romance", "relationships"]
+}
 
 # Trait extraction functions
-def extract_courage(dialogues):
-    """Extract courage based on positive sentiment."""
+def extract_humor(dialogues):
+    """Extract humor based on positive sentiment and keywords."""
     scores = []
     for dialogue in dialogues:
         result = sentiment_pipeline(dialogue)
-        if result[0]['label'] == "POSITIVE":
+        if result[0]['label'] == "POSITIVE" and any(
+            keyword in dialogue.lower() for keyword in trait_keywords["humor"]
+        ):
             scores.append(result[0]['score'])
     return sum(scores) / len(scores) if scores else 0
 
-def extract_loyalty(dialogues):
-    """Extract loyalty based on keyword matches."""
+def extract_empathy(dialogues):
+    """Extract empathy based on keyword matches."""
     total_words = sum(len(dialogue.split()) for dialogue in dialogues)
     keyword_count = sum(
-        sum(1 for word in dialogue.split() if word.lower() in trait_keywords["loyalty"])
+        sum(1 for word in dialogue.split() if word.lower() in trait_keywords["empathy"])
         for dialogue in dialogues
     )
     return keyword_count / total_words if total_words > 0 else 0
 
-def extract_trait(dialogues, labels):
+def extract_zero_shot_trait(dialogues, labels):
     """Extract traits using zero-shot classification."""
     scores = []
     for dialogue in dialogues:
@@ -53,12 +58,14 @@ def extract_trait(dialogues, labels):
 def calculate_character_traits(dialogues):
     """Calculate all traits for a character."""
     return {
-        "courage": extract_courage(dialogues),
-        "loyalty": extract_loyalty(dialogues),
-        "manipulativeness": extract_trait(dialogues, manipulative_labels),
-        "ambition": extract_trait(dialogues, ambitious_labels),
+        "humor": extract_humor(dialogues),
+        "empathy": extract_empathy(dialogues),
+        "quirkiness": extract_zero_shot_trait(dialogues, zero_shot_labels["quirkiness"]),
+        "ambition": extract_zero_shot_trait(dialogues, zero_shot_labels["ambition"]),
+        "romanticism": extract_zero_shot_trait(dialogues, zero_shot_labels["romanticism"]),
     }
 
+# Normalization remains the same as the GoT implementation
 def normalize_traits(character_profiles):
     """Normalize trait scores for consistency."""
     all_traits = {trait: [] for trait in next(iter(character_profiles.values()))}
@@ -78,34 +85,29 @@ def normalize_traits(character_profiles):
     return normalized_profiles
 
 '''
-# Test Dataset
+# Example Dataset
 dataset = {
-    "Jon Snow": [
-        "The North remembers.",
-        "I swore a vow to protect the people.",
-        "I don’t want it. I never have."
+    "Chandler": [
+        "Could I BE more sarcastic?",
+        "I make jokes when I'm uncomfortable.",
+        "I'm hopeless with women."
     ],
-    "Cersei Lannister": [
-        "When you play the game of thrones, you win or you die.",
-        "I choose violence.",
-        "Power is power."
-    ],
-    "Arya Stark": [
-        "A girl is Arya Stark of Winterfell. And I'm going home.",
-        "I’m going to kill the Queen.",
-        "The world doesn’t just let girls decide what they want to be."
+    "Rachel": [
+        "It's like all my life, everyone has told me, 'You're a shoe!'",
+        "I got off the plane.",
+        "Oh, I forgot, you were the only person on this planet who knew what a hanger was."
     ]
 }
 
-# Run Trait Calculation test data
-character_personality_profiles = {
+# Calculate traits for each character
+character_traits = {
     character: calculate_character_traits(dialogues)
     for character, dialogues in dataset.items()
 }
 '''
 
 # dataset
-file_path = 'dataset\got_all_scripts\got_data_cleaned.csv'
+file_path = 'dataset//friends_scripts//friends_data_cleaned.csv'
 dataset = pd.read_csv(file_path)
 
 
@@ -125,5 +127,5 @@ print("\nNormalized Trait Scores:")
 print(normalized_profiles)
 
 # Save to a JSON file
-with open("char_scores\got_char_profiles.json", "w") as f:
+with open("char_scores//friends_char_profiles.json", "w") as f:
     json.dump(normalized_profiles, f)

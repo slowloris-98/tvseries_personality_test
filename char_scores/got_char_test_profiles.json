@@ -5,4 +5,4 @@
     "Cersei Lannister": { "loyalty": 0.2, "ambition": 1.0, "manipulativeness": 0.9, "courage": 0.6 },
     "Arya Stark": { "loyalty": 0.9, "ambition": 0.6, "manipulativeness": 0.5, "courage": 0.8 },
     "Sansa Stark": { "loyalty": 0.7, "ambition": 0.4, "manipulativeness": 0.6, "courage": 0.5 }
-  }
+}

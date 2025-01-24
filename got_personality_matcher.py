@@ -3,7 +3,7 @@ import pandas as pd
 from scipy.spatial.distance import cosine
 
 # Load character profiles from JSON
-with open("char_scores\character_profiles.json", "r") as f:
+with open("char_scores\got_char_profiles.json", "r") as f:
     character_profiles = json.load(f)
 
 # Define quiz questions and answer options with scores
