@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Thrones Personality Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .question {
+            margin: 20px 0;
+        }
+        .answer {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Game of Thrones Personality Quiz</h1>
+    <form id="quiz-form">
+        <div id="quiz-container"></div>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const questions = [
+            "Would you break a promise to protect a loved one, even if it had serious consequences?",
+            "How important is it to be trustworthy to you?",
+            "Would you betray a friend to save yourself from trouble?",
+            "How do you feel about people who break their oaths?",
+            "Would you sacrifice your own happiness for the happiness of your family?", 
+            "What is your primary motivation in life?",
+            "How important is it to you to be successful?",
+            "Would you be willing to take risks to achieve your goals?",
+            "How do you feel about competition?",
+            "Do you believe that everyone deserves an equal opportunity to succeed?",
+            "Do you often try to influence other people's opinions?",
+            "How comfortable are you with using flattery to get what you want?",
+            "Do you often try to anticipate and exploit other people's weaknesses?",
+            "How important is it to you to maintain a good public image?",
+            "Would you ever lie to protect yourself from harm?",
+            "How do you react to danger or threats?",
+            "Would you stand up for someone being bullied?",
+            "How do you feel about taking risks?",
+            "Do you admire people who overcome adversity?",
+            "How would you describe your own level of bravery?"
+        ];
+
+        const options = {
+            "Would you break a promise to protect a loved one, even if it had serious consequences?": ["Absolutely not.", "It depends on the situation.", "If it benefits me in the long run, maybe.", "Promises are easily broken."],
+            "How important is it to be trustworthy to you?": ["Extremely important. My word is my bond.", "Important, but not the most important thing.", "Not very important. People should look out for themselves.", "Trust is overrated."],
+            "Would you betray a friend to save yourself from trouble?": ["Never", "Maybe, if the consequences were severe enough.", "Definitely, if it meant my survival.", "I don't have many close friends to betray."],
+            "How do you feel about people who break their oaths?": ["I have no respect for them.", "It depends on the reason for breaking the oath.", "It's understandable if they had no choice.", "Oaths are meaningless in the real world."],
+            "Would you sacrifice your own happiness for the happiness of your family?": ["Absolutely, without hesitation.", "I would consider it, but it would be a difficult decision.", "My own happiness is important to me.", "Family is important, but not more important than myself."],
+            "What is your primary motivation in life?": ["To help others and make the world a better place.", "To achieve personal and professional success.", "To live a comfortable and peaceful life.", "To experience as much as possible and have fun."],
+            "How important is it to you to be successful?": ["Very important. I strive to be the best at everything I do.", "Important, but not the most important thing in life.", "Not very important. I'm content with a simple life.", "Success is subjective and not something I focus on."],
+            "Would you be willing to take risks to achieve your goals?": ["Yes, I'm not afraid to take calculated risks.", "I prefer to play it safe and avoid unnecessary risks.", "I would only take risks if the potential rewards are very high.", "I'm not very ambitious and rarely take risks."],
+            "How do you feel about competition?": ["I thrive on competition and always strive to win.", "I'm comfortable with competition, but it's not my primary focus.", "I prefer to avoid competition whenever possible.", "I don't understand the appeal of competition."],
+            "Do you believe that everyone deserves an equal opportunity to succeed?": ["Absolutely. Everyone should have a fair chance.", "Yes, but some people are naturally more talented than others.", "Not necessarily. Some people are simply not meant to succeed.", "I don't really have strong opinions on this."],
+            "Do you often try to influence other people's opinions?": ["No, I value honesty and direct communication.", "Sometimes, depending on the situation.", "Yes, I enjoy persuading others to see things my way.", "I'm not good at manipulating people and don't usually try."],
+            "How comfortable are you with using flattery to get what you want?": ["Very uncomfortable. I find it dishonest.", "Somewhat uncomfortable, but I might do it in certain situations.", "I don't mind using flattery if it gets me the results I want.", "I'm not above using flattery to achieve my goals."],
+            "Do you often try to anticipate and exploit other people's weaknesses?": ["No, I believe in treating others with respect.", "Sometimes, but only if it's necessary.", "Yes, I think it's a valuable skill to be able to read people.", "I'm not very good at reading people and don't usually try to exploit them."],
+            "How important is it to you to maintain a good public image?": ["Not very important. I am who I am.", "Important, but I wouldn't do anything dishonest to protect it.", "Very important. My reputation is crucial to my success.", "I don't really care what other people think of me."],
+            "Would you ever lie to protect yourself from harm?": ["No, I would always tell the truth.", "It depends on the situation.", "Yes, if it meant avoiding serious consequences.", "I'm not afraid to lie if it benefits me."],
+            "How do you react to danger or threats?": ["I face my fears head-on.", "I try to stay calm and assess the situation.", "I tend to avoid dangerous situations if possible.", "I easily panic and get overwhelmed by fear."],
+            "Would you stand up for someone being bullied?": ["Absolutely. I wouldn't tolerate injustice.", "I would try to intervene if it was safe to do so.", "I would probably try to stay out of it.", "I would be too afraid to get involved."],
+            "How do you feel about taking risks?": ["I embrace challenges and enjoy taking calculated risks.", "I'm willing to take risks if the potential rewards outweigh the dangers.", "I prefer to avoid unnecessary risks.", "I'm generally risk-averse and prefer safety."],
+            "Do you admire people who overcome adversity?": ["Yes, I find their resilience inspiring.", "I admire their strength, but I wouldn't want to go through what they did.", "I don't necessarily admire them. Everyone faces challenges.", "I don't pay much attention to other people's struggles."],
+            "How would you describe your own level of bravery?": ["I consider myself to be very courageous.", 
+                "I'm reasonably courageous, but I have my limits.",
+                "I'm not a particularly courageous person.",
+                "I would describe myself as a coward."]
+        };
+
+
+        const quizContainer = document.getElementById('quiz-container');
+
+        // Render questions and options
+        questions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `<p>${index + 1}. ${question}</p>`;
+
+            options[question].forEach((option, optIndex) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer';
+                answerDiv.innerHTML = `
+                    <input type="radio" name="q${index}" value="${optIndex}" required>
+                    <label>${option}</label>
+                `;
+                questionDiv.appendChild(answerDiv);
+            });
+
+            quizContainer.appendChild(questionDiv);
+        });
+
+        // Handle form submission
+        document.getElementById('quiz-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const answers = {};
+            for (let [key, value] of formData.entries()) {
+                answers[key] = parseInt(value);
+            }
+
+            // Send answers to backend
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ answers }),
+            });
+
+            const result = await response.json();
+            document.getElementById('result').innerText = `Your matching character is: ${result.character}`;
+        });
+    </script>
+</body>
+</html>
