@@ -1,0 +1,44 @@
+Observations:
+ 
+- to deal with parity in number of dialogues what if I consider the longest 239 dialogues of all the characters and then find the scores?
+	- 239 is the no of sentencess of 26th character.
+	- might get more accurate scores
+	-vinstead of sentence count, consider token count?
+	
+- Everyone is getting danearys
+	- Increase the no of options for each questions
+	- Increase the no of questions and reduce the number of options
+
+- Top got characters:
+	- Jon
+	- Arya
+	- Danerys
+	- Cerci
+	- Tyrion
+	- Jamie
+	- Sansa
+	- Varys
+	- Peter Baelish
+	- Joffrey
+	- Bran
+	- Davos
+	- Brienne
+	- Eddard
+	- Ramsay
+	
+- Top Friends characters:
+	- Rachel
+	- Ross
+	- Monica
+	- Chandler
+	- Phoebe
+	- Joey
+	
+	- For personality we will use these 6 only as the there is a huge data disparity
+	
+	- Other characters include:
+	- Mike
+	- Jannice
+	- Gunther
+
+

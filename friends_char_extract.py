@@ -4,6 +4,8 @@ import torch
 import pandas as pd
 from scipy.spatial.distance import cosine
 import json
+from transformers import BartTokenizer
+import re
 
 # Section-1 Create the personality models and find the scores for the characters
 
@@ -11,59 +13,89 @@ import json
 device = 0 if torch.cuda.is_available() else -1
 
 # Initialize Hugging Face pipelines with the appropriate device
-sentiment_pipeline = pipeline("sentiment-analysis", device=device)
-zero_shot_pipeline = pipeline("zero-shot-classification", device=device)
+#sentiment_pipeline = pipeline("sentiment-analysis", device=device)
+zero_shot_pipeline = pipeline(model="facebook/bart-large-mnli", device=device)
 
-# Define new traits and their labels
-trait_keywords = {
-    "humor": ["joke", "funny", "laugh", "hilarious", "sarcasm"],
-    "empathy": ["support", "help", "understand", "kindness", "sympathy"]
-}
+zero_shot_labels = [
+    "eccentricity", "weirdness", "uniqueness", # quirkiness
+    "ambition", "goal-setting", "career", "dreams", "success", "motivation", "goals", # ambition
+    "love", "romance", "relationships", # romanticism
+    "meticulousness", "perfectionism", "orderliness", "attention to detail", "cleanliness", "structure" # perfectionism
+    "sarcasm", "irony", "mocking", "teasing", "sarcastic humor", # sarcasm
+    "competitiveness", "winning", "challenge", "rivalry", "competitive" # competitiveness
+]
 
-zero_shot_labels = {
-    "quirkiness": ["eccentricity", "weirdness", "uniqueness"],
-    "ambition": ["ambition", "goal-setting", "career", "dreams"],
-    "romanticism": ["love", "romance", "relationships"]
-}
+def chunk_text_by_sentence(text, max_length=900):
+    """
+    Splits the text into chunks where each chunk contains multiple sentences,
+    but the chunk size does not exceed max_length. Sentences are split by commas.
+    Args:
+        text (str): The input text to chunk.
+        max_length (int): The maximum length of each chunk.
+    Returns:
+        List[str]: List of text chunks, each with sentences ending at commas.
+    """
+    sentences = text.split(", ")  # Split text by commas (assuming commas separate sentences)
+    chunks = []
+    current_chunk = ""
+    
+    for sentence in sentences:
+        # Check if adding the sentence would exceed the max_length
+        if len(current_chunk) + len(sentence) + 2 <= max_length:  # +2 for the added comma and space
+            if current_chunk:
+                current_chunk += ", " + sentence
+            else:
+                current_chunk = sentence
+        else:
+            # If adding this sentence would exceed the max length, finalize the current chunk
+            chunks.append(current_chunk)
+            current_chunk = sentence  # Start a new chunk with the current sentence
 
-# Trait extraction functions
-def extract_humor(dialogues):
-    """Extract humor based on positive sentiment and keywords."""
-    scores = []
-    for dialogue in dialogues:
-        result = sentiment_pipeline(dialogue)
-        if result[0]['label'] == "POSITIVE" and any(
-            keyword in dialogue.lower() for keyword in trait_keywords["humor"]
-        ):
-            scores.append(result[0]['score'])
-    return sum(scores) / len(scores) if scores else 0
+    # Append the last chunk if it exists
+    if current_chunk:
+        chunks.append(current_chunk)
 
-def extract_empathy(dialogues):
-    """Extract empathy based on keyword matches."""
-    total_words = sum(len(dialogue.split()) for dialogue in dialogues)
-    keyword_count = sum(
-        sum(1 for word in dialogue.split() if word.lower() in trait_keywords["empathy"])
-        for dialogue in dialogues
-    )
-    return keyword_count / total_words if total_words > 0 else 0
+    return chunks
 
-def extract_zero_shot_trait(dialogues, labels):
+def clean_text(input_text):
+    pattern = r"[^a-zA-Z0-9,?' ]"
+    cleaned_text = re.sub(pattern, '', input_text)
+    return cleaned_text
+
+def extract_zeroshot_trait(character, dialogues, labels):
     """Extract traits using zero-shot classification."""
-    scores = []
-    for dialogue in dialogues:
-        result = zero_shot_pipeline(dialogue, candidate_labels=labels)
-        scores.append(max(result["scores"]))
-    return sum(scores) / len(scores) if scores else 0
+    print(f"Processing character: {character}")
 
-def calculate_character_traits(dialogues):
-    """Calculate all traits for a character."""
-    return {
-        "humor": extract_humor(dialogues),
-        "empathy": extract_empathy(dialogues),
-        "quirkiness": extract_zero_shot_trait(dialogues, zero_shot_labels["quirkiness"]),
-        "ambition": extract_zero_shot_trait(dialogues, zero_shot_labels["ambition"]),
-        "romanticism": extract_zero_shot_trait(dialogues, zero_shot_labels["romanticism"]),
+    # Initialize scores dictionary
+    scores = {
+        "quirkiness": 0,
+        "ambition": 0,
+        "romanticism": 0,
+        "perfectionism": 0,
+        "sarcasm": 0,
+        "competitiveness": 0
     }
+
+    all_dialogues = clean_text("".join(dialogues))
+    
+    # chunking as zero shotpipeine has a limit of 1024 tokens
+    chunks = chunk_text_by_sentence(all_dialogues)
+    for chunk in chunks:
+        result = zero_shot_pipeline(chunk, candidate_labels=labels)
+        
+        # Aggregate scores for each trait across all chunks
+        scores["quirkiness"] += sum(result["scores"][0:3])
+        scores["ambition"] += sum(result["scores"][3:9])
+        scores["romanticism"] += sum(result["scores"][9:12])
+        scores["perfectionism"] += sum(result["scores"][12:18])
+        scores["sarcasm"] += sum(result["scores"][18:24])
+        scores["competitiveness"] += sum(result["scores"][24:30])
+        print(f"character: {character} result: {result}")
+    num_chunks = len(chunks)
+    for trait in scores:
+        scores[trait] /= num_chunks
+        print(f"Final scores for {character}: {scores}")
+    return scores
 
 # Normalization remains the same as the GoT implementation
 def normalize_traits(character_profiles):
@@ -107,13 +139,13 @@ character_traits = {
 '''
 
 # dataset
-file_path = 'dataset//friends_scripts//friends_data_cleaned.csv'
+file_path = 'dataset//friends_scripts//friends_data_cleaned_core.csv'
 dataset = pd.read_csv(file_path)
 
 
 # Run Trait Calculation actual data
 character_personality_profiles = {
-    record['Name']: calculate_character_traits(record['Sentence'])
+    record['Name']: extract_zeroshot_trait(record['Name'], record['Sentence'], zero_shot_labels)
     for index,record in dataset.iterrows()
 }
 
@@ -127,5 +159,9 @@ print("\nNormalized Trait Scores:")
 print(normalized_profiles)
 
 # Save to a JSON file
-with open("char_scores//friends_char_profiles.json", "w") as f:
+with open("char_scores//friends_char_profiles_norm.json", "w") as f:
     json.dump(normalized_profiles, f)
+
+# Save to a JSON file
+with open("char_scores//friends_char_profiles_orig.json", "w") as f:
+    json.dump(character_personality_profiles, f)

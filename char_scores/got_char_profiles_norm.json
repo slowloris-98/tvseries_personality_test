@@ -1,0 +1,128 @@
+{
+    "tyrion lannister": {
+        "manipulativeness": 0.6431204361318641,
+        "ambition": 0.3437269648172377,
+        "loyalty": 0.45928944425871226,
+        "courage": 0.5608846561089452
+    },
+    "jon snow": {
+        "manipulativeness": 0.24355399883590378,
+        "ambition": 0.7562499540612009,
+        "loyalty": 0.8615409106100039,
+        "courage": 0.717187505010431
+    },
+    "daenerys targaryen": {
+        "manipulativeness": 0.5471735182565928,
+        "ambition": 0.6108318347894287,
+        "loyalty": 0.49370507351265586,
+        "courage": 0.49685017748573523
+    },
+    "cersei lannister": {
+        "manipulativeness": 0.8257412830484664,
+        "ambition": 0.36669955747887223,
+        "loyalty": 0.21827922877706454,
+        "courage": 0.32642018097336256
+    },
+    "jaime lannister": {
+        "manipulativeness": 0.4935218406806885,
+        "ambition": 0.628737826923399,
+        "loyalty": 0.5289612957854326,
+        "courage": 0.5949096866707915
+    },
+    "sansa stark": {
+        "manipulativeness": 0.6414065478250158,
+        "ambition": 0.42405890984056,
+        "loyalty": 0.4262554209134396,
+        "courage": 0.5235654273361549
+    },
+    "arya stark": {
+        "manipulativeness": 0.42544597218278934,
+        "ambition": 0.5375718096722752,
+        "loyalty": 0.5942334114044848,
+        "courage": 0.8241918611225304
+    },
+    "theon greyjoy": {
+        "manipulativeness": 0.4817194808869857,
+        "ambition": 0.6630146962969964,
+        "loyalty": 0.5618770123041774,
+        "courage": 0.5374575572537452
+    },
+    "petyr baelish": {
+        "manipulativeness": 0.6264129284034095,
+        "ambition": 0.4933274416785432,
+        "loyalty": 0.4887599179952179,
+        "courage": 0.3846513898870673
+    },
+    "bran stark": {
+        "manipulativeness": 0.35816675532398234,
+        "ambition": 0.4269759920064362,
+        "loyalty": 0.7487737321963998,
+        "courage": 0.9256620367805751
+    },
+    "tywin lannister": {
+        "manipulativeness": 0.33307931073421637,
+        "ambition": 0.7641351931880256,
+        "loyalty": 0.6717416902281681,
+        "courage": 0.7258762637809759
+    },
+    "jorah mormont": {
+        "manipulativeness": 0.2891186109732049,
+        "ambition": 0.7994353035518088,
+        "loyalty": 0.724678035385469,
+        "courage": 0.7409160399508032
+    },
+    "varys": {
+        "manipulativeness": 0.7989671103308106,
+        "ambition": 0.4258638928639853,
+        "loyalty": 0.22902050816520572,
+        "courage": 0.32543001211931466
+    },
+    "brienne": {
+        "manipulativeness": 0.5793629687204739,
+        "ambition": 0.8040021490725403,
+        "loyalty": 0.4450804937141147,
+        "courage": 0.23475444533402473
+    },
+    "eddard stark": {
+        "manipulativeness": 0.32148797065232587,
+        "ambition": 0.6361213742764283,
+        "loyalty": 0.7726597867730551,
+        "courage": 0.7525414315195309
+    },
+    "robb stark": {
+        "manipulativeness": 0.39727923813019184,
+        "ambition": 0.6941703950150775,
+        "loyalty": 0.6355094258384428,
+        "courage": 0.6578947193122276
+    },
+    "stannis baratheon": {
+        "manipulativeness": 0.5110837006176217,
+        "ambition": 0.4967019147831801,
+        "loyalty": 0.6005703981674615,
+        "courage": 0.5782502997834406
+    },
+    "catelyn stark": {
+        "manipulativeness": 0.5605628238365322,
+        "ambition": 0.738506764344971,
+        "loyalty": 0.4551830544808902,
+        "courage": 0.3605394488557277
+    },
+    "ramsay bolton": {
+        "manipulativeness": 0.7387224687431649,
+        "ambition": 0.30845831266791685,
+        "loyalty": 0.33083347630117205,
+        "courage": 0.4997283932232148
+    },
+    "margaery tyrell": {
+        "manipulativeness": 0.6423718286140276,
+        "ambition": 0.43139543662843327,
+        "loyalty": 0.4536687654303611,
+        "courage": 0.4656643722742735
+    },
+    "joffrey lannister": {
+        "manipulativeness": 0.6256468992619069,
+        "ambition": 0.43138392413199317,
+        "loyalty": 0.4593093364826407,
+        "courage": 0.5119900109561313
+    }
+}

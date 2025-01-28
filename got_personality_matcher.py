@@ -3,7 +3,7 @@ import pandas as pd
 from scipy.spatial.distance import cosine
 
 # Load character profiles from JSON
-with open("char_scores\got_char_profiles.json", "r") as f:
+with open("char_scores\got_char_profiles_norm.json", "r") as f:
     character_profiles = json.load(f)
 
 # Define quiz questions and answer options with scores
@@ -35,11 +35,11 @@ questions = [
 ]
 
 answer_options = {
-    questions[0]: ["Absolutely not.","It depends on the situation.", "If it benefits me in the long run, maybe.", "Promises are easily broken."],
-    questions[1]: ["Extremely important. My word is my bond.", "Important, but not the most important thing.", "Not very important. People should look out for themselves.", "Not very important. People should look out for themselves.", "Trust is overrated."],
+    questions[0]: ["Absolutely not.","Only if I truly love them", "Only if it was a life or death situation", "Promises are easily broken."],
+    questions[1]: ["Extremely important. My word is my bond.", "Important, but not the most important thing.", "Not very important. People should look out for themselves.", "Trust is overrated."],
     questions[2]: ["Never", "Maybe, if the consequences were severe enough.", "Definitely, if it meant my survival.", "I don't have many close friends to betray."],
     questions[3]: ["I have no respect for them.", "It depends on the reason for breaking the oath.", "It's understandable if they had no choice.", "Oaths are meaningless in the real world."],
-    questions[4]: ["Absolutely, without hesitation.", "I would consider it, but it would be a difficult decision.", "My own happiness is important to me.", "Family is important, but not more important than myself."],
+    questions[4]: ["Absolutely, without hesitation.", "I would consider it, but it would be a difficult decision.", "Only my own happiness is important to me.", "Family is important, I would try to find a middle way."],
     questions[5]: ["To help others and make the world a better place.", "To achieve personal and professional success.", "To live a comfortable and peaceful life.", "To experience as much as possible and have fun."],
     questions[6]: ["Very important. I strive to be the best at everything I do.", "Important, but not the most important thing in life.", "Not very important. I'm content with a simple life.", "Success is subjective and not something I focus on."],
     questions[7]: ["Yes, I'm not afraid to take calculated risks.", "I prefer to play it safe and avoid unnecessary risks.", "I would only take risks if the potential rewards are very high.", "I'm not very ambitious and rarely take risks."],
@@ -57,46 +57,13 @@ answer_options = {
     questions[19]: ["I consider myself to be very courageous.", "I'm reasonably courageous, but I have my limits.", "I'm not a particularly courageous person.", "I would describe myself as a coward."]
 }
 
-'''
 answer_scores = {
     "loyalty": {
-        questions[0]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0},
-        questions[1]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0},
-        questions[2]: {"a": 1, "b": 0.5, "c": 0, "d": 0},
-        questions[3]: {"a": 1, "b": 0.75, "c": 0.5, "d": 0},
-        questions[4]: {"a": 1, "b": 0.75, "c": 0.5, "d": 0.25}
-    },
-    "ambition": {
-        questions[5]: {"a": 0.25, "b": 1, "c": 0.5, "d": 0.25},
-        questions[6]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0},
-        questions[7]: {"a": 1, "b": 0.5, "c": 0.25, "d": 0},
-        questions[8]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0},
-        questions[9]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0}
-    },
-    "manipulativeness": {
-        questions[10]: {"a": 0, "b": 0.5, "c": 1, "d": 0.25},
-        questions[11]: {"a": 0, "b": 0.25, "c": 0.75, "d": 1},
-        questions[12]: {"a": 0, "b": 0.25, "c": 0.75, "d": 1},
-        questions[13]: {"a": 0, "b": 0.25, "c": 1, "d": 0.25},
-        questions[14]: {"a": 0, "b": 0.5, "c": 1, "d": 0.25},
-        questions[15]: {"a": 0, "b": 0.5, "c": 1, "d": 1}
-    },
-    "courage": {
-        questions[16]: {"a": 1, "b": 0.75, "c": 0.5, "d": 0},
-        questions[17]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0},
-        questions[18]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0},
-        questions[19]: {"a": 1, "b": 0.75, "c": 0.25, "d": 0}
-    }
-}
-'''
-
-answer_scores = {
-    "loyalty": {
-        questions[0]: {"Absolutely not.": 1, "It depends on the situation.": 0.75, "If it benefits me in the long run, maybe.": 0.25, "Promises are easily broken.": 0},
+        questions[0]: {"Absolutely not.": 1, "Only if I truly love them": 0.25, "Only if it was a life or death situation": 0.5, "Promises are easily broken.": 0},
         questions[1]: {"Extremely important. My word is my bond.": 1, "Important, but not the most important thing.": 0.75, "Not very important. People should look out for themselves.": 0.25, "Trust is overrated.": 0},
         questions[2]: {"Never": 1, "Maybe, if the consequences were severe enough.": 0.5, "Definitely, if it meant my survival.": 0, "I don't have many close friends to betray.": 0},
         questions[3]: {"I have no respect for them.": 1, "It depends on the reason for breaking the oath.": 0.75, "It's understandable if they had no choice.": 0.5, "Oaths are meaningless in the real world.": 0},
-        questions[4]: {"Absolutely, without hesitation.": 1, "I would consider it, but it would be a difficult decision.": 0.75, "My own happiness is important to me.": 0.5, "Family is important, but not more important than myself.": 0.25}
+        questions[4]: {"Absolutely, without hesitation.": 1, "I would consider it, but it would be a difficult decision.": 0.75, "Only my own happiness is important to me.": 0, "Family is important, I would try to find a middle way.": 0.5}
     },
     "ambition": {
         questions[5]: {"To help others and make the world a better place.": 0.25, "To achieve personal and professional success.": 1, "To live a comfortable and peaceful life.": 0.5, "To experience as much as possible and have fun.": 0.25},
@@ -111,9 +78,9 @@ answer_scores = {
         questions[12]: {"No, I believe in treating others with respect.": 0, "Sometimes, but only if it's necessary.": 0.25, "Yes, I think it's a valuable skill to be able to read people.": 1, "I'm not very good at reading people and don't usually try to exploit them.": 0.25},
         questions[13]: {"Not very important. I am who I am.": 0, "Important, but I wouldn't do anything dishonest to protect it.": 0.5, "Very important. My reputation is crucial to my success.": 1, "I don't really care what other people think of me.": 0.25},
         questions[14]: {"No, I would always tell the truth.": 0, "It depends on the situation.": 0.5, "Yes, if it meant avoiding serious consequences.": 1, "I'm not afraid to lie if it benefits me.": 1},
-        questions[15]: {"I face my fears head-on.": 0, "I try to stay calm and assess the situation.": 0.5, "I tend to avoid dangerous situations if possible.": 0.25, "I easily panic and get overwhelmed by fear.": 0}
     },
     "courage": {
+        questions[15]: {"I face my fears head-on.": 0, "I try to stay calm and assess the situation.": 0.5, "I tend to avoid dangerous situations if possible.": 0.25, "I easily panic and get overwhelmed by fear.": 0},
         questions[16]: {"Absolutely. I wouldn't tolerate injustice.": 1, "I would try to intervene if it was safe to do so.": 0.75, "I would probably try to stay out of it.": 0.25, "I would be too afraid to get involved.": 0},
         questions[17]: {"I embrace challenges and enjoy taking calculated risks.": 1, "I'm willing to take risks if the potential rewards outweigh the dangers.": 0.75, "I prefer to avoid unnecessary risks.": 0.25, "I'm generally risk-averse and prefer safety.": 0},
         questions[18]: {"Yes, I find their resilience inspiring.": 1, "I admire their strength, but I wouldn't want to go through what they did.": 0.75, "I don't necessarily admire them. Everyone faces challenges.": 0.25, "I don't pay much attention to other people's struggles.": 0},
@@ -153,7 +120,7 @@ def find_closest_character(user_profile, character_profiles):
 
     for character, character_profile in character_profiles.items():
         #distance = cosine(list(user_profile.values()/4), list(character_profile.values()))
-        distance = cosine(list(value / 4 for value in user_profile.values()), list(character_profile.values()))
+        distance = cosine(list(value for value in user_profile.values()), list(character_profile.values()))
         if distance < min_distance:
             min_distance = distance
             closest_character = character

@@ -5,13 +5,8 @@ import plotly.express as px
 import pandas as pd
 
 # Load character profiles from JSON
-#with open("char_scores\character_profiles.json", "r") as f:
-#    character_profiles = json.load(f)
-
-# Load character profiles from JSON
-with open("char_scores\got_char_test_profiles.json", "r") as f:
+with open("char_scores//friends_char_profiles_norm.json", "r") as f:
     character_profiles = json.load(f)
-
 
 def plot_interactive_radar_chart(scores):
     """Plot an interactive radar chart with bold character names in hover tips."""

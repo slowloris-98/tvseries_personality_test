@@ -1,0 +1,130 @@
+{
+    "loyalty": {
+        "Would you break a promise to protect a loved one, even if it had serious consequences?": {
+            "Absolutely not.": 1,
+            "Only if I truly love them": 0.25,
+            "Only if it was a life or death situation": 0.5,
+            "Promises are easily broken.": 0
+        },
+        "How important is it to be trustworthy to you?": {
+            "Extremely important. My word is my bond.": 1,
+            "Important, but not the most important thing.": 0.75,
+            "Not very important. People should look out for themselves.": 0.25,
+            "Trust is overrated.": 0
+        },
+        "Would you betray a friend to save yourself from trouble?": {
+            "Never": 1,
+            "Maybe, if the consequences were severe enough.": 0.5,
+            "Definitely, if it meant my survival.": 0,
+            "I don't have many close friends to betray.": 0
+        },
+        "How do you feel about people who break their oaths?": {
+            "I have no respect for them.": 1,
+            "It depends on the reason for breaking the oath.": 0.75,
+            "It's understandable if they had no choice.": 0.5,
+            "Oaths are meaningless in the real world.": 0
+        },
+        "Would you sacrifice your own happiness for the happiness of your family?": {
+            "Absolutely, without hesitation.": 1,
+            "I would consider it, but it would be a difficult decision.": 0.75,
+            "Only my own happiness is important to me.": 0,
+            "Family is important, I would try to find a middle way.": 0.5
+        }
+    },
+    "ambition": {
+        "What is your primary motivation in life?": {
+            "To help others and make the world a better place.": 0.25,
+            "To achieve personal and professional success.": 1,
+            "To live a comfortable and peaceful life.": 0.5,
+            "To experience as much as possible and have fun.": 0.25
+        },
+        "How important is it to you to be successful?": {
+            "Very important. I strive to be the best at everything I do.": 1,
+            "Important, but not the most important thing in life.": 0.75,
+            "Not very important. I'm content with a simple life.": 0.25,
+            "Success is subjective and not something I focus on.": 0
+        },
+        "Would you be willing to take risks to achieve your goals?": {
+            "Yes, I'm not afraid to take calculated risks.": 1,
+            "I prefer to play it safe and avoid unnecessary risks.": 0.5,
+            "I would only take risks if the potential rewards are very high.": 0.25,
+            "I'm not very ambitious and rarely take risks.": 0
+        },
+        "How do you feel about competition?": {
+            "I thrive on competition and always strive to win.": 1,
+            "I'm comfortable with competition, but it's not my primary focus.": 0.75,
+            "I prefer to avoid competition whenever possible.": 0.25,
+            "I don't understand the appeal of competition.": 0
+        },
+        "Do you believe that everyone deserves an equal opportunity to succeed?": {
+            "Absolutely. Everyone should have a fair chance.": 1,
+            "Yes, but some people are naturally more talented than others.": 0.75,
+            "Not necessarily. Some people are simply not meant to succeed.": 0.25,
+            "I don't really have strong opinions on this.": 0
+        }
+    },
+    "manipulativeness": {
+        "Do you often try to influence other people's opinions?": {
+            "No, I value honesty and direct communication.": 0,
+            "Sometimes, depending on the situation.": 0.5,
+            "Yes, I enjoy persuading others to see things my way.": 1,
+            "I'm not good at manipulating people and don't usually try.": 0.25
+        },
+        "How comfortable are you with using flattery to get what you want?": {
+            "Very uncomfortable. I find it dishonest.": 0,
+            "Somewhat uncomfortable, but I might do it in certain situations.": 0.25,
+            "I don't mind using flattery if it gets me the results I want.": 0.75,
+            "I'm not above using flattery to achieve my goals.": 1
+        },
+        "Do you often try to anticipate and exploit other people's weaknesses?": {
+            "No, I believe in treating others with respect.": 0,
+            "Sometimes, but only if it's necessary.": 0.25,
+            "Yes, I think it's a valuable skill to be able to read people.": 1,
+            "I'm not very good at reading people and don't usually try to exploit them.": 0.25
+        },
+        "How important is it to you to maintain a good public image?": {
+            "Not very important. I am who I am.": 0,
+            "Important, but I wouldn't do anything dishonest to protect it.": 0.5,
+            "Very important. My reputation is crucial to my success.": 1,
+            "I don't really care what other people think of me.": 0.25
+        },
+        "Would you ever lie to protect yourself from harm?": {
+            "No, I would always tell the truth.": 0,
+            "It depends on the situation.": 0.5,
+            "Yes, if it meant avoiding serious consequences.": 1,
+            "I'm not afraid to lie if it benefits me.": 1
+        }
+    },
+    "courage": {
+        "How do you react to danger or threats?": {
+            "I face my fears head-on.": 0,
+            "I try to stay calm and assess the situation.": 0.5,
+            "I tend to avoid dangerous situations if possible.": 0.25,
+            "I easily panic and get overwhelmed by fear.": 0
+        },
+        "Would you stand up for someone being bullied?": {
+            "Absolutely. I wouldn't tolerate injustice.": 1,
+            "I would try to intervene if it was safe to do so.": 0.75,
+            "I would probably try to stay out of it.": 0.25,
+            "I would be too afraid to get involved.": 0
+        },
+        "How do you feel about taking risks?": {
+            "I embrace challenges and enjoy taking calculated risks.": 1,
+            "I'm willing to take risks if the potential rewards outweigh the dangers.": 0.75,
+            "I prefer to avoid unnecessary risks.": 0.25,
+            "I'm generally risk-averse and prefer safety.": 0
+        },
+        "Do you admire people who overcome adversity?": {
+            "Yes, I find their resilience inspiring.": 1,
+            "I admire their strength, but I wouldn't want to go through what they did.": 0.75,
+            "I don't necessarily admire them. Everyone faces challenges.": 0.25,
+            "I don't pay much attention to other people's struggles.": 0
+        },
+        "How would you describe your own level of bravery?": {
+            "I consider myself to be very courageous.": 1,
+            "I'm reasonably courageous, but I have my limits.": 0.75,
+            "I'm not a particularly courageous person.": 0.25,
+            "I would describe myself as a coward.": 0
+        }
+    }
+}

@@ -4,6 +4,8 @@ import torch
 import pandas as pd
 from scipy.spatial.distance import cosine
 import json
+from transformers import BartTokenizer
+import re
 
 # Section-1 Create the personality models and find the scores for the characters
 
@@ -11,53 +13,83 @@ import json
 device = 0 if torch.cuda.is_available() else -1
 
 # Initialize Hugging Face pipelines with the appropriate device
-sentiment_pipeline = pipeline("sentiment-analysis", device=device)
-zero_shot_pipeline = pipeline("zero-shot-classification", device=device)
+zero_shot_pipeline = pipeline(model="facebook/bart-large-mnli", device=device)
 
-# Trait keywords for loyalty
-trait_keywords = {
-    "loyalty": ["family", "honor", "oath", "duty", "friendship", "trust"]
-}
+zero_shot_labels = [
+    "deception", "manipulation", "power play", "trickery", # manipulativeness
+    "ambition", "goal-setting", "career", "dreams", # ambition
+    "faithfulness", "dedication", "allegiance", "trustworthiness", "devotion", "commitment", # loyalty
+    "bravery", "valor", "fearlessness", "heroism", "boldness", "daring" # courage
+]
 
-# Labels for zero-shot classification
-manipulative_labels = ["deception", "manipulation", "power play", "trickery"]
-ambitious_labels = ["ambition", "power", "goal-setting", "dreams"]
+def chunk_text_by_sentence(text, max_length=900):
+    """
+    Splits the text into chunks where each chunk contains multiple sentences,
+    but the chunk size does not exceed max_length. Sentences are split by commas.
+    Args:
+        text (str): The input text to chunk.
+        max_length (int): The maximum length of each chunk.
+    Returns:
+        List[str]: List of text chunks, each with sentences ending at commas.
+    """
+    sentences = text.split(", ")  # Split text by commas (assuming commas separate sentences)
+    chunks = []
+    current_chunk = ""
+    
+    for sentence in sentences:
+        # Check if adding the sentence would exceed the max_length
+        if len(current_chunk) + len(sentence) + 2 <= max_length:  # +2 for the added comma and space
+            if current_chunk:
+                current_chunk += ", " + sentence
+            else:
+                current_chunk = sentence
+        else:
+            # If adding this sentence would exceed the max length, finalize the current chunk
+            chunks.append(current_chunk)
+            current_chunk = sentence  # Start a new chunk with the current sentence
 
-# Trait extraction functions
-def extract_courage(dialogues):
-    """Extract courage based on positive sentiment."""
-    scores = []
-    for dialogue in dialogues:
-        result = sentiment_pipeline(dialogue)
-        if result[0]['label'] == "POSITIVE":
-            scores.append(result[0]['score'])
-    return sum(scores) / len(scores) if scores else 0
+    # Append the last chunk if it exists
+    if current_chunk:
+        chunks.append(current_chunk)
 
-def extract_loyalty(dialogues):
-    """Extract loyalty based on keyword matches."""
-    total_words = sum(len(dialogue.split()) for dialogue in dialogues)
-    keyword_count = sum(
-        sum(1 for word in dialogue.split() if word.lower() in trait_keywords["loyalty"])
-        for dialogue in dialogues
-    )
-    return keyword_count / total_words if total_words > 0 else 0
+    return chunks
 
-def extract_trait(dialogues, labels):
+def clean_text(input_text):
+    pattern = r"[^a-zA-Z0-9,?' ]"
+    cleaned_text = re.sub(pattern, '', input_text)
+    return cleaned_text
+
+def extract_zeroshot_trait(character, dialogues, labels):
     """Extract traits using zero-shot classification."""
-    scores = []
-    for dialogue in dialogues:
-        result = zero_shot_pipeline(dialogue, candidate_labels=labels)
-        scores.append(max(result["scores"]))
-    return sum(scores) / len(scores) if scores else 0
+    print(f"Processing character: {character}")
 
-def calculate_character_traits(dialogues):
-    """Calculate all traits for a character."""
-    return {
-        "courage": extract_courage(dialogues),
-        "loyalty": extract_loyalty(dialogues),
-        "manipulativeness": extract_trait(dialogues, manipulative_labels),
-        "ambition": extract_trait(dialogues, ambitious_labels),
+    # Initialize scores dictionary
+    scores = {
+        "manipulativeness": 0,
+        "ambition": 0,
+        "loyalty": 0,
+        "courage": 0
     }
+
+    all_dialogues = clean_text("".join(dialogues))
+    
+    # chunking as zero shotpipeine has a limit of 1024 tokens
+    chunks = chunk_text_by_sentence(all_dialogues)
+    for chunk in chunks:
+        result = zero_shot_pipeline(chunk, candidate_labels=labels)
+        
+        # Aggregate scores for each trait across all chunks
+        scores["manipulativeness"] += sum(result["scores"][0:5])
+        scores["ambition"] += sum(result["scores"][5:9])
+        scores["loyalty"] += sum(result["scores"][9:15])
+        scores["courage"] += sum(result["scores"][15:21])
+        print(f"character: {character} result: {result}")
+    num_chunks = len(chunks)
+    for trait in scores:
+        scores[trait] /= num_chunks
+        print(f"Final scores for {character}: {scores}")
+    return scores
+
 
 def normalize_traits(character_profiles):
     """Normalize trait scores for consistency."""
@@ -111,7 +143,7 @@ dataset = pd.read_csv(file_path)
 
 # Run Trait Calculation actual data
 character_personality_profiles = {
-    record['Name']: calculate_character_traits(record['Sentence'])
+    record['Name']: extract_zeroshot_trait(record['Name'], record['Sentence'], zero_shot_labels)
     for index,record in dataset.iterrows()
 }
 
@@ -124,6 +156,10 @@ print(character_personality_profiles)
 print("\nNormalized Trait Scores:")
 print(normalized_profiles)
 
-# Save to a JSON file
-with open("char_scores\got_char_profiles.json", "w") as f:
+# Save normalized scores to a JSON file
+with open("char_scores\got_char_profiles_norm.json", "w") as f:
     json.dump(normalized_profiles, f)
+
+# Save raw scores to a JSON file
+with open("char_scores\got_char_profiles_orig.json", "w") as f:
+    json.dump(character_personality_profiles, f)
