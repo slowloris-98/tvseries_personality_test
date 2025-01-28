@@ -29,16 +29,6 @@ This project uses the *Game of Thrones Script (All Seasons)* dataset from Kaggle
 3. **Normalization**: Normalizes trait scores for accurate comparison across characters.
 4. **Personality Matching**: Matches user traits with character profiles using cosine similarity.
 
-## Usage
-
-### Clone the Repository
-git clone https://github.com/yourusername/PersonaProfiler.git
-cd PersonaProfiler
-
-### Install Dependencies
-Ensure Python 3.7+ is installed, then run:
-
-
 ## Results
 
 - Character personality profiles are saved in a JSON file (`char_profiles.json`).
