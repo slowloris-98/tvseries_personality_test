@@ -57,17 +57,16 @@ Below is a pie chart illustrating the proportion of dialogues by different chara
 ### Accuracy Comparison with Character Profiles
 The following images compare user personality inputs with iconic Game of Thrones characters to demonstrate accuracy:
 
-1. ![Character Comparison 1](character_comparison_1.png)
-2. ![Character Comparison 2](character_comparison_2.png)
+1. ![Cercie vs Danaerys](results\got_radar_cercie_danaerys.jpg.png)
+2. ![Arya vs Jon](results\got_radar_arya_jon.jpg.png)
+3. ![Cercie vs Jaime](results\got_radar_cercie_jaime.jpg.png)
+
+For more comparisions visit: https://got-character-comparision.netlify.app/
 
 These visualizations highlight how closely user traits align with specific character profiles.
 
-
 ## Contributing
 Contributions are welcome! Feel free to fork this repository and submit pull requests with enhancements or fixes.
-
-## License
-This project is licensed under the MIT License.
 
 ## Contact
 For questions or collaborations, please reach out:

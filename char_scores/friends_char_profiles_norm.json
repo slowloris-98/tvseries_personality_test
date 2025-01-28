@@ -1,1 +1,50 @@
-{"rachel": {"quirkiness": 0.16018676582337912, "ambition": 0.3137938560265344, "romanticism": 0.5634766539090454, "perfectionism": 0.8506896893395566, "sarcasm": 0.9998104486429145, "competitiveness": 0.9995312170816723}, "ross": {"quirkiness": 0.6778071405714553, "ambition": 0.0, "romanticism": 0.0, "perfectionism": 0.3371387854574071, "sarcasm": 0.8222938290527169, "competitiveness": 0.9941368944423382}, "chandler": {"quirkiness": 0.9999158939589138, "ambition": 0.485859873964697, "romanticism": 0.3238970666610229, "perfectionism": 0.0, "sarcasm": 0.0, "competitiveness": 0.0}, "monica": {"quirkiness": 0.0881360203600745, "ambition": 0.7903836922988204, "romanticism": 0.6756173634627618, "perfectionism": 0.8789030924320782, "sarcasm": 0.7130946763478724, "competitiveness": 0.6986856330524555}, "joey": {"quirkiness": 0.2537786381710519, "ambition": 0.9998124382007909, "romanticism": 0.9997057865399519, "perfectionism": 0.5470948772602346, "sarcasm": 0.29357565909557665, "competitiveness": 0.26325434967793987}, "phoebe": {"quirkiness": 0.0, "ambition": 0.7753702069634879, "romanticism": 0.8375293417434638, "perfectionism": 0.9996826309780138, "sarcasm": 0.6998101765067838, "competitiveness": 0.8239259257783278}}
+{
+    "rachel": {
+        "quirkiness": 0.16018676582337912,
+        "ambition": 0.3137938560265344,
+        "romanticism": 0.5634766539090454,
+        "perfectionism": 0.8506896893395566,
+        "sarcasm": 0.9998104486429145,
+        "competitiveness": 0.9995312170816723
+    },
+    "ross": {
+        "quirkiness": 0.6778071405714553,
+        "ambition": 0.0,
+        "romanticism": 0.0,
+        "perfectionism": 0.3371387854574071,
+        "sarcasm": 0.8222938290527169,
+        "competitiveness": 0.9941368944423382
+    },
+    "chandler": {
+        "quirkiness": 0.9999158939589138,
+        "ambition": 0.485859873964697,
+        "romanticism": 0.3238970666610229,
+        "perfectionism": 0.0,
+        "sarcasm": 0.0,
+        "competitiveness": 0.0
+    },
+    "monica": {
+        "quirkiness": 0.0881360203600745,
+        "ambition": 0.7903836922988204,
+        "romanticism": 0.6756173634627618,
+        "perfectionism": 0.8789030924320782,
+        "sarcasm": 0.7130946763478724,
+        "competitiveness": 0.6986856330524555
+    },
+    "joey": {
+        "quirkiness": 0.2537786381710519,
+        "ambition": 0.9998124382007909,
+        "romanticism": 0.9997057865399519,
+        "perfectionism": 0.5470948772602346,
+        "sarcasm": 0.29357565909557665,
+        "competitiveness": 0.26325434967793987
+    },
+    "phoebe": {
+        "quirkiness": 0.0,
+        "ambition": 0.7753702069634879,
+        "romanticism": 0.8375293417434638,
+        "perfectionism": 0.9996826309780138,
+        "sarcasm": 0.6998101765067838,
+        "competitiveness": 0.8239259257783278
+    }
+}
