@@ -74,8 +74,3 @@ These visualizations highlight how closely user traits align with specific chara
 ## Contributing
 Contributions are welcome! Feel free to fork this repository and submit pull requests with enhancements or fixes.
 
-## Contact
-For questions or collaborations, please reach out:
-
-**Udayan Atreya**  
-GitHub | LinkedIn
