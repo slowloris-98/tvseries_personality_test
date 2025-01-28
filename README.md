@@ -46,20 +46,26 @@ Ensure Python 3.7+ is installed, then run:
 - User personality inputs are matched with the closest character profile.
 
 
-<img src="https://github.com/user-attachments/assets/7668ce46-1a24-4cbe-bfe3-b8236a37ab93" alt="Total Loan Amount Distribution Based on Regions" width="350">
-
-
 ### Dialogue Proportion by Characters
 Below is a pie chart illustrating the proportion of dialogues by different characters in the dataset:
 
-![Dialogue Proportion](results\got_pie_dialogue_count.png.png)
+![Dialogue Proportion](results/got_pie_dialogue_count.png)
+
 
 ### Accuracy Comparison with Character Profiles
 The following images compare user personality inputs with iconic Game of Thrones characters to demonstrate accuracy:
 
-1. ![Cercie vs Danaerys](results\got_radar_cercie_danaerys.jpg.png)
-2. ![Arya vs Jon](results\got_radar_arya_jon.jpg.png)
-3. ![Cercie vs Jaime](results\got_radar_cercie_jaime.jpg.png)
+1. Cercei vs Danaerys
+   
+     ![Cercie vs Danaerys](results/got_radar_cercie_danaerys.jpg)
+
+3. Arya vs Jon
+   
+     ![Arya vs Jon](results/got_radar_arya_jon.jpg)
+
+4. Cercei vs Jaime
+
+    ![Cercie vs Jaime](results/got_radar_cercie_jaime.jpg)
 
 For more comparisions visit: https://got-character-comparision.netlify.app/
 
